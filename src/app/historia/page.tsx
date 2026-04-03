@@ -70,7 +70,7 @@ export default function Historia() {
             </h2>
             <div className="w-10 h-px mb-5" style={{ backgroundColor: "var(--gold)" }} />
             <p
-              className="leading-relaxed mb-4 text-sm"
+              className="leading-relaxed mb-4"
               style={{ fontFamily: "'Lora', serif", color: "var(--text-mid)" }}
             >
               Utan större tvekan är Skvadern, skapad av konservator Rudolf Granberg, den symbol
@@ -80,7 +80,7 @@ export default function Historia() {
               hare försedd med vingar, för att efterlikna Pegasus.
             </p>
             <p
-              className="leading-relaxed text-sm"
+              className="leading-relaxed"
               style={{ fontFamily: "'Lora', serif", color: "var(--text-mid)" }}
             >
               Vissa vill göra gällande att detta låg till grund för Granberg då han skapade

@@ -26,7 +26,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <p className="text-sm uppercase tracking-[0.3em] mb-4 text-gray-300">
+          <p className="text-sm uppercase tracking-[0.3em] mb-4 font-medium" style={{ color: "var(--text-mid)" }}>
             Obesfvärad elegance sedan 1950
           </p>
           <h1
