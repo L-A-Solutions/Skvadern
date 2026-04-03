@@ -6,10 +6,10 @@ export default function Evenemang() {
       {/* Hero */}
       <section className="relative h-64 flex items-center justify-center overflow-hidden">
         <Image
-          src="/images/samsittning-rymden-ypsilon-e1695761490430.jpg"
+          src="/images/patron_evenemang.jpg"
           alt="Evenemang"
           fill
-          className="object-cover object-center"
+          className="object-cover object-[50%_60%]" //justera första % för horisontell, andra % för vertikal
           priority
         />
         <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.55)" }} />

@@ -6,3 +6,10 @@ export type Activity = {
   location: string | null;
   created_at: string;
 };
+
+export type GalleryImage = {
+  id: string;
+  url: string;
+  caption: string | null;
+  created_at: string;
+};

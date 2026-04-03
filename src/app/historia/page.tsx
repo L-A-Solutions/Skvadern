@@ -9,7 +9,7 @@ export default function Historia() {
           src="/images/SuM-foto021826-1.jpg"
           alt="Rudolf Granberg med skvaderdjuret. Foto: Norrlandsbild/Ragge Ellefsson, Sundsvalls museum"
           fill
-          className="object-cover object-center"
+          className="object-cover object-[50%_67%]"
           priority
         />
         <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.55)" }} />

@@ -1,9 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { addActivity, deleteActivity } from "./actions";
+import { deleteImage } from "./gallery-actions";
 import { logout } from "@/app/login/actions";
 import { Trash2 } from "lucide-react";
-import type { Activity } from "@/lib/supabase/types";
+import { GalleryUploadForm } from "./GalleryUploadForm";
+import type { Activity, GalleryImage } from "@/lib/supabase/types";
 
 function formatDateTime(iso: string) {
   const d = new Date(iso);
@@ -33,6 +35,12 @@ export default async function AdminPage() {
     .select("*")
     .order("date", { ascending: true })
     .returns<Activity[]>();
+
+  const { data: images } = await supabase
+    .from("gallery_images")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .returns<GalleryImage[]>();
 
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "calc(100vh - 80px)" }}>
@@ -272,6 +280,90 @@ export default async function AdminPage() {
               })}
             </div>
           )}
+        </section>
+
+        {/* Divider */}
+        <div className="my-14 h-px" style={{ backgroundColor: "var(--border)" }} />
+
+        {/* Gallery section */}
+        <section>
+          <p
+            className="text-xs uppercase tracking-[0.3em] mb-3"
+            style={{ color: "var(--gold)" }}
+          >
+            Fotogalleri
+          </p>
+          <h2
+            className="text-xl font-semibold mb-6"
+            style={{ fontFamily: "'Playfair Display', serif" }}
+          >
+            Föreningens stunder
+          </h2>
+
+          <GalleryUploadForm />
+
+          {/* Uploaded images list */}
+          <div className="mt-8">
+            <h3
+              className="text-sm font-medium mb-4 uppercase tracking-widest"
+              style={{ color: "var(--text-light)" }}
+            >
+              Uppladdade bilder ({images?.length ?? 0})
+            </h3>
+
+            {!images || images.length === 0 ? (
+              <p
+                className="text-sm py-8 text-center border"
+                style={{ color: "var(--text-light)", borderColor: "var(--border)" }}
+              >
+                Inga bilder uppladdade ännu.
+              </p>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {images.map((image) => {
+                  const deleteWithId = deleteImage.bind(null, image.id);
+                  return (
+                    <div
+                      key={image.id}
+                      className="group relative border overflow-hidden"
+                      style={{ borderColor: "var(--border)" }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={image.url}
+                        alt={image.caption ?? ""}
+                        className="w-full h-28 object-cover"
+                      />
+                      {image.caption && (
+                        <p
+                          className="px-2 py-1.5 text-xs truncate"
+                          style={{ color: "var(--text-light)" }}
+                        >
+                          {image.caption}
+                        </p>
+                      )}
+                      <form
+                        action={deleteWithId}
+                        className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      >
+                        <button
+                          type="submit"
+                          aria-label="Ta bort bild"
+                          className="p-1.5 rounded transition-all duration-200 hover:text-red-400 hover:bg-red-400/10"
+                          style={{
+                            color: "white",
+                            backgroundColor: "rgba(0,0,0,0.55)",
+                          }}
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </form>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </section>
       </div>
     </div>
