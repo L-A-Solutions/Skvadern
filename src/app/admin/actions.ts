@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function addActivity(formData: FormData) {
   const supabase = await createClient();
@@ -15,7 +15,7 @@ export async function addActivity(formData: FormData) {
 
   if (error) throw new Error(error.message);
 
-  revalidatePath("/kalender");
+  revalidateTag("activities", "max");
   revalidatePath("/admin");
 }
 
@@ -29,6 +29,6 @@ export async function deleteActivity(id: string, _formData: FormData) {
 
   if (error) throw new Error(error.message);
 
-  revalidatePath("/kalender");
+  revalidateTag("activities", "max");
   revalidatePath("/admin");
 }

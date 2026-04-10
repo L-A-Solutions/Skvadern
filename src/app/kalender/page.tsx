@@ -1,6 +1,21 @@
-import { createClient } from "@/lib/supabase/server";
+import { unstable_cache } from "next/cache";
+import { createPublicClient } from "@/lib/supabase/public";
 import { CalendarDays, Clock, Tag, MapPin, FileText } from "lucide-react";
 import type { Activity } from "@/lib/supabase/types";
+
+const getActivities = unstable_cache(
+  async () => {
+    const supabase = createPublicClient();
+    const { data } = await supabase
+      .from("activities")
+      .select("*")
+      .order("date", { ascending: true })
+      .returns<Activity[]>();
+    return data ?? [];
+  },
+  ["activities"],
+  { revalidate: 60, tags: ["activities"] }
+);
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("sv-SE", {
@@ -18,13 +33,7 @@ function formatTime(iso: string) {
 }
 
 export default async function Kalender() {
-  const supabase = await createClient();
-
-  const { data: activities } = await supabase
-    .from("activities")
-    .select("*")
-    .order("date", { ascending: true })
-    .returns<Activity[]>();
+  const activities = await getActivities();
 
   return (
     <div style={{ backgroundColor: "var(--bg)" }}>

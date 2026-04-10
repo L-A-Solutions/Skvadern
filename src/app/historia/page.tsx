@@ -175,7 +175,7 @@ export default function Historia() {
             className="leading-relaxed"
             style={{ fontFamily: "'Lora', serif", color: "var(--text-mid)" }}
           >
-            Namnet Skvaderspel uppkom 1962 efter en tävling bland bröderna, innan dess
+            Namnet SkvaderSpel uppkom 1962 efter en tävling bland bröderna, innan dess
             kallades det för skvadermöte. På senare år har det även tagits beslut att Spel
             alltid ska skrivas med stort S för att markera vikten av dess innebörd.
           </p>
@@ -226,13 +226,13 @@ export default function Historia() {
               },
               {
                 year: "1962",
-                title: "Skvaderspelet",
-                text: 'Föreningens centrala sammankomst fick sitt slutgiltiga namn efter en intern tävling. Benämningen "Skvaderspel" ersatte det äldre "skvadermöte". Ordet "Spel" skrivs numera med stort S för att markera vikten av dess innebörd.',
+                title: "SkvaderSpelet",
+                text: 'Föreningens centrala sammankomst fick sitt slutgiltiga namn efter en intern tävling. Benämningen "SkvaderSpel" ersatte det äldre "skvadermöte". Ordet "Spel" skrivs numera med stort S för att markera vikten av dess innebörd.',
               },
               {
                 year: "2025",
                 title: "75-årsjubileum",
-                text: "Föreningen firade sitt 75-årsjubileum med ett storslaget jubileumsskvaderspel. Generationer av bröder samlades för att hedra en tradition som levat vidare i mer än tre fjärdedels sekel.",
+                text: "Föreningen firade sitt 75-årsjubileum med ett storslaget JubileumsskvaderSpel. Generationer av bröder samlades för att hedra en tradition som levat vidare i mer än tre fjärdedels sekel.",
               },
             ].map((item, i, arr) => (
               <div key={item.year} className="flex gap-8">

@@ -1,12 +1,46 @@
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/server";
+import { unstable_cache } from "next/cache";
+import { createPublicClient } from "@/lib/supabase/public";
 import type { GalleryImage } from "@/lib/supabase/types";
 
+const getGalleryImages = unstable_cache(
+  async () => {
+    const supabase = createPublicClient();
+    const { data } = await supabase
+      .from("gallery_images")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .returns<GalleryImage[]>();
+    return data ?? [];
+  },
+  ["gallery-images"],
+  { revalidate: 60, tags: ["gallery"] }
+);
+
 const staticGallery = [
-  { src: "/images/564734785_2865585923641951_6803562775840569346_n.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
-  { src: "/images/565192044_2865585700308640_353422530656248580_n.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
-  { src: "/images/565664227_2865585790308631_1230713063261803056_n.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
-  { src: "/images/121273191_203711071113726_8115844507210399686_n-e1695760236348.jpg", alt: "Föreningsbild", caption: "Föreningsbild" },
+  
+
+  { src: "/images/jc_prickare.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/joar1.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+
+  { src: "/images/spel3.jpg", alt: "Skvaderspel", caption: "Skvaderspel" }, 
+
+  { src: "/images/spel5.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/spel6.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/spel7.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/spel8.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/spel9.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/spel10.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/spel11.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/spel12.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/spel13.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+
+  { src: "/images/spel2.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+  { src: "/images/spel1.jpg", alt: "Skvaderspel", caption: "Skvaderspel" },
+
+
+
+
 ];
 
 const jubilee = [
@@ -15,12 +49,7 @@ const jubilee = [
 ];
 
 export default async function Bilder() {
-  const supabase = await createClient();
-  const { data: dynamicImages } = await supabase
-    .from("gallery_images")
-    .select("*")
-    .order("created_at", { ascending: false })
-    .returns<GalleryImage[]>();
+  const dynamicImages = await getGalleryImages();
   return (
     <div style={{ backgroundColor: "var(--bg)" }}>
       {/* Hero */}

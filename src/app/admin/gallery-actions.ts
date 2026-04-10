@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 const BUCKET = "gallery";
 
@@ -35,7 +35,7 @@ export async function uploadImage(
 
   if (dbError) return { error: dbError.message };
 
-  revalidatePath("/bilder");
+  revalidateTag("gallery", "max");
   revalidatePath("/admin");
   return null;
 }
@@ -60,6 +60,6 @@ export async function deleteImage(id: string, _formData: FormData) {
 
   await supabase.from("gallery_images").delete().eq("id", id);
 
-  revalidatePath("/bilder");
+  revalidateTag("gallery", "max");
   revalidatePath("/admin");
 }
